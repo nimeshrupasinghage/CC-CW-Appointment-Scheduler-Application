@@ -28,4 +28,14 @@ public class AppointmentScheduleController {
         appointmentService.cancelAppointment(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Appointment> rescheduleAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
+        return ResponseEntity.ok(appointmentService.updateAppointment(id, appointment));
+    }
+
+    @GetMapping("/welcome")
+    public String getWelcomeMessage() {
+        return "Appointment Scheduler";
+    }
 }

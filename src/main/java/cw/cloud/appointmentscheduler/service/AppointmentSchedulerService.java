@@ -21,4 +21,12 @@ public class AppointmentSchedulerService {
     public void cancelAppointment(Long id) {
         appointmentRepository.deleteById(id);
     }
+
+    public Appointment updateAppointment(Long id, Appointment appointment) {
+        Appointment existingAppointment = getAppointmentById(id);
+        existingAppointment.setDate(appointment.getDate());
+        existingAppointment.setTime(appointment.getTime());
+        return appointmentRepository.save(existingAppointment);
+    }
+
 }

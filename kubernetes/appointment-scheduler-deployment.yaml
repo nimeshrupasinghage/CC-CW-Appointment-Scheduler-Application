@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointment-service
+  labels:
+    app: appointment-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appointment-service
+  template:
+    metadata:
+      labels:
+        app: appointment-service
+    spec:
+      containers:
+      - name: appointment-service
+        image: nimeshrupasinghage/appointment-service:${GITHUB_SHA}
+        ports:
+        - containerPort: 9090
+      imagePullSecrets:
+        - name: my-docker-secret
