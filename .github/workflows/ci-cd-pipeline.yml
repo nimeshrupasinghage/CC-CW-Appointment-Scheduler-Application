@@ -43,7 +43,7 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-        docker push ${{ secrets.DOCKER_USERNAME }}/patient-service:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/appointment-service:${{ github.sha }}
 
     # Step 7: Deploy to AWS EKS
     - name: Configure AWS Credentials
@@ -56,19 +56,19 @@ jobs:
     # Step 8: Update kubeconfig
     - name: Update kubeconfig for EKS
       run: |
-        aws eks update-kubeconfig --region us-east-2 --name cc-cw-eksss
+        aws eks update-kubeconfig --region us-east-2 --name cc-cw-eks
 
     # Step 9: Update Kubernetes Deployment
     - name: Update Kubernetes Deployment
       run: |
-        sed -i "s|\${GITHUB_SHA}|${{ github.sha }}|g" ./kubernetes/patient-record-deployment.yaml
+        sed -i "s|\${GITHUB_SHA}|${{ github.sha }}|g" ./kubernetes/appointment-scheduler-deployment.yaml
 
     # Step 10: Deploy to AWS EKS
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f ./kubernetes/patient-record-deployment.yaml
+        kubectl apply -f ./kubernetes/appointment-scheduler-deployment.yaml
 
     # Step 11: Deploy Service yaml
     - name: Deploy Service yaml
       run: |
-        kubectl apply -f ./kubernetes/patient-record-service.yaml
+        kubectl apply -f ./kubernetes/appointment-scheduler-service.yaml
