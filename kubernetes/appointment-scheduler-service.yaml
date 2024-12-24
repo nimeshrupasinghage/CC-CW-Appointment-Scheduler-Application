@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: appointment-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: appointment-service
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 9090
+      port: 8085
+      targetPort: 8085

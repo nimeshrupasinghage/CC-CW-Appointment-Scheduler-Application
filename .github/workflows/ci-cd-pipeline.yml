@@ -72,3 +72,7 @@ jobs:
     - name: Deploy Service yaml
       run: |
         kubectl apply -f ./kubernetes/appointment-scheduler-service.yaml
+    # Step 12: Deploy HPA yaml
+    - name: Deploy HPA yaml
+      run: |
+        kubectl apply -f ./kubernetes/appointment-scheduler-hpa.yaml
